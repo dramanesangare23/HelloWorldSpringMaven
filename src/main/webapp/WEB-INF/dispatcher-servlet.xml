@@ -1,0 +1,51 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<context:component-scan base-package="com.programcreek.helloworld.controller" />
+
+	<bean id="employee1" class="com.programcreek.helloworld.model.Employee">
+		<constructor-arg index="0" value="1" />
+		<constructor-arg index="1" value="Mike" />
+		<constructor-arg index="2" value="Smith" />
+	</bean>
+	<bean id="employee2" class="com.programcreek.helloworld.model.Employee">
+		<constructor-arg index="0" value="2" />
+		<constructor-arg index="1" value="John" />
+		<constructor-arg index="2" value="Taylor" />
+	</bean>
+	<bean id="employee3" class="com.programcreek.helloworld.model.Employee">
+		<constructor-arg index="0" value="3" />
+		<constructor-arg index="1" value="Dave" />
+		<constructor-arg index="2" value="Wilson" />
+	</bean>
+
+	<bean id="employeeManager" class="com.programcreek.helloworld.service.EmployeeManager" scope="singleton">
+		<property name="employeeList">
+		 	<list>
+				<ref bean="employee1" />
+				<ref bean="employee2" />
+				<ref bean="employee3" />
+			</list>
+		</property>
+	</bean>
+
+	<bean name="/employee"
+		class="com.programcreek.helloworld.controller.EmployeeController">
+		<property name="employeeManager" ref="employeeManager" />
+	</bean>
+
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/WEB-INF/views/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+</beans>
